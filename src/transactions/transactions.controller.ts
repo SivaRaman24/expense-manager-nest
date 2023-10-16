@@ -1,30 +1,35 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Body } from '@nestjs/common';
 import { Delete, Param, Patch, Post } from '@nestjs/common/decorators/http';
+
+import { TransactionsService } from './transactions.service';
+import { TransactionDto } from './dto/transaction.dto';
 
 @Controller('transactions')
 export class TransactionsController {
+  constructor(private transactionsService: TransactionsService) {}
+
   @Post()
-  create() {
-    return 'Will create new transaction';
+  create(@Body() transactionDto: TransactionDto) {
+    return this.transactionsService.save(transactionDto);
   }
 
   @Get()
   findAll() {
-    return 'Returns all the transactions list';
+    return this.transactionsService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return `Return ${id} from the transaction`;
+    return this.transactionsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string) {
-    return `Will update this transaction -> ${id}`;
+  update(@Param('id') id: string, @Body() transactionDto: TransactionDto) {
+    return this.transactionsService.update(transactionDto, id);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `Remove this transaction -> ${id}`;
+    return this.transactionsService.remove(id);
   }
 }
