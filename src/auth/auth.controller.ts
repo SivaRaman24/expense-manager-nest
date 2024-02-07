@@ -17,7 +17,7 @@ export class AuthController {
   }
 
   @SkipAuth()
-  @Post('/signin')
+  @Post('/login')
   signIn(
     @Body() authCredentialsDto: AuthCredentialsDto,
   ): Promise<{ accessToken: string }> {

@@ -1,8 +1,15 @@
-import { Controller, Get, Body } from '@nestjs/common';
-import { Delete, Param, Patch, Post } from '@nestjs/common/decorators/http';
+import { Controller, Get, Body, Request } from '@nestjs/common';
+import {
+  Delete,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common/decorators/http';
 
 import { TransactionsService } from './transactions.service';
 import { TransactionDto } from './dto/transaction.dto';
+import { TransactionFilterDto } from './dto/transaction-filter.dto';
 
 @Controller('transactions')
 export class TransactionsController {
@@ -14,8 +21,8 @@ export class TransactionsController {
   }
 
   @Get()
-  findAll() {
-    return this.transactionsService.findAll();
+  findAll(@Request() req, @Query() filterDto: TransactionFilterDto) {
+    return this.transactionsService.findAll(req.user?.id, filterDto);
   }
 
   @Get(':id')

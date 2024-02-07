@@ -10,6 +10,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { UsersModule } from './users/users.module';
 import { ScheduledTransactionsModule } from './scheduled-transactions/scheduled-transactions.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ScheduledTransactionsModule } from './scheduled-transactions/scheduled-
     }),
     UsersModule,
     ScheduledTransactionsModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],

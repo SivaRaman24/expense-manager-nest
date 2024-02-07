@@ -1,7 +1,16 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  CreateDateColumn,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 import { Category } from 'src/categories/category.entity';
 import { User } from 'src/users/user.entity';
+import { TransactionType } from './transaction-type.model';
+import { IsEnum } from 'class-validator';
 
 @Entity()
 export class Transaction {
@@ -23,19 +32,25 @@ export class Transaction {
   @Column()
   date: string;
 
+  @Column({ default: 'IN' })
+  currencyCode: string; // currency short code or id will be stored
+
   @Column()
   amount: string;
 
   @Column()
-  type: string; // Should be enum - Income or Expense
+  @IsEnum(TransactionType)
+  type: TransactionType; // Should be enum - Income or Expense
 
   @Column({ nullable: true })
   imagePath: string;
 
-  @Column({ default: new Date() })
+  @CreateDateColumn()
+  @Column({ type: 'timestamptz', default: new Date() })
   createdAt: string;
 
-  @Column({ default: new Date() })
+  @UpdateDateColumn()
+  @Column({ type: 'timestamptz', default: new Date() })
   updatedAt: string;
 
   @ManyToOne(() => Category, (category) => category.transactions)

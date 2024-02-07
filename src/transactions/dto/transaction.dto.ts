@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
+import { TransactionType } from '../transaction-type.model';
 
 export class TransactionDto {
   @IsNotEmpty()
@@ -20,7 +21,8 @@ export class TransactionDto {
   amount: string;
 
   @IsNotEmpty()
-  type: string; // Should be enum - Income or Expense
+  @IsEnum(TransactionType)
+  type: TransactionType; // Should be enum - Income or Expense
 
   @IsOptional()
   imagePath: string;

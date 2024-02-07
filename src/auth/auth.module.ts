@@ -17,7 +17,7 @@ import { UsersModule } from 'src/users/users.module';
       global: true,
       secret: 'ExpenseManagerSecretKey',
       signOptions: {
-        expiresIn: 3600,
+        expiresIn: '3600s',
       },
     }),
   ],
