@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, ILike, Repository, MoreThan, LessThan } from 'typeorm';
+import { Between, ILike, Repository, MoreThan, LessThan, DeleteResult } from 'typeorm';
 
 import { Transaction } from './transaction.entity';
 import { TransactionDto } from './dto/transaction.dto';
@@ -143,7 +143,21 @@ export class TransactionsService {
     });
   }
 
-  async remove(id: string): Promise<void> {
-    await this.transactionRepository.delete({ id });
+  async remove(id: string): Promise<{ id: string; message: string }> {
+    const deleteTransactionPromise = await this.transactionRepository.delete({
+      id,
+    });
+
+    let message: string;
+    if (deleteTransactionPromise.affected > 0) {
+      message = 'Transaction deleted successfully';
+    } else {
+      message = 'Transaction not available';
+    }
+
+    return {
+      id: id,
+      message,
+    };
   }
 }

@@ -5,7 +5,6 @@ export class TransactionDto {
   @IsNotEmpty()
   categoryId: string;
 
-  @IsNotEmpty()
   userId: string;
 
   @IsNotEmpty()

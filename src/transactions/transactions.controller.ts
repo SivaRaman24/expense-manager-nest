@@ -17,6 +17,10 @@ export class TransactionsController {
 
   @Post()
   create(@Body() transactionDto: TransactionDto) {
+    transactionDto = {
+      ...transactionDto,
+      userId: '5357d553-7026-47fe-b13e-1f3d984a0aef', // TODO: Replace user id from the logged in user header details
+    };
     return this.transactionsService.save(transactionDto);
   }
 

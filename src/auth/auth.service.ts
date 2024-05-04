@@ -20,7 +20,6 @@ export class AuthService {
 
   async signIn(authCredentialsDto: AuthCredentialsDto) {
     const { email, password } = authCredentialsDto;
-
     const user = await this.usersService.findUserByEmail(email);
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload: JwtPayload = {
@@ -29,9 +28,9 @@ export class AuthService {
       };
 
       // Generate a jwt token
-      const accessToken: string = this.jwtService.sign(payload);
+      const authToken: string = this.jwtService.sign(payload);
 
-      return { accessToken };
+      return { userId: user.id, email: user.email, authToken };
     } else {
       throw new UnauthorizedException('Please check your login credentials!');
     }

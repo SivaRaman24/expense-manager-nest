@@ -20,7 +20,7 @@ export class AuthController {
   @Post('/login')
   signIn(
     @Body() authCredentialsDto: AuthCredentialsDto,
-  ): Promise<{ accessToken: string }> {
+  ): Promise<{ authToken: string }> {
     return this.authService.signIn(authCredentialsDto);
   }
 }
